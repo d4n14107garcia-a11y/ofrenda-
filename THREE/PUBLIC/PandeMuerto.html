@@ -1,0 +1,247 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>Práctica 01</title>
+</head>
+<body>
+    
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través de 
+        secuencias de comandos (por lo general JavaScript ).-->
+</canvas>
+
+<!-- Aquí va todo el código de three.js -->
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+<script type="importmap"> 
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js" 
+        }
+}
+</script>
+<script type="module"> 
+//🗃️🗃️ Mandar llamar a la librería
+    import * as THREE from 'three'; 
+    import {OrbitControls} from 'three/OrbitControls';
+    console.log(OrbitControls);
+    import {RoundedBoxGeometry} from "./js/RoundedBoxGeometry.js"
+
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x70707C);
+
+
+// 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,2000
+      );
+    scene.add(camera);
+
+    //Settings de la cámara
+    camera.position.set(0, 4, 25);
+
+    // Añadiendo los OrbitControls
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+// Grids
+var gridHelper = new THREE.GridHelper(200,200);
+scene.add(gridHelper);
+
+
+
+//ejes
+var axes = new THREE.AxesHelper(100);
+//scene.add(axes);
+ 
+
+// Espacio para colocar los objetos
+
+///  💫💢🐭🐭 LUCES
+
+
+
+//OBJETOS  ✏️✏️✏️✏️  🪶
+
+//PAN DE MUERTO 
+//base del pan 
+var geometry7 = new THREE.SphereGeometry(
+    10.5,            
+    84,            
+    62,             
+    0,              
+    Math.PI * 2,    
+    0,              
+    Math.PI / 2     
+);
+var material7 = new THREE.MeshBasicMaterial({
+    color: 0xBA8A3D,
+    side: THREE.DoubleSide,
+   
+})
+var mesh7 = new THREE.Mesh(geometry7,material7);
+scene.add(mesh7);
+mesh7.position.set(0,0,0);
+
+//HUESOS 
+//cabeza HUESO CENTRAL 
+var geometry11 = new THREE.SphereGeometry(2.6,90,80);
+var material11 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+})
+var mesh11 = new THREE.Mesh(geometry11,material11);
+//scene.add(mesh11);
+mesh11.position.set(0,10,0);
+
+//primer hueso 
+var geometry9 = new THREE.TorusGeometry(3,1.2,20,200,30);
+var material9 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+})
+var mesh9 = new THREE.Mesh(geometry9,material9);
+//scene.add(mesh9);
+mesh9.position.set(-4,7,0);
+
+//segunda cabeza
+var geometry12 = new THREE.SphereGeometry(2.6,90,80);
+var material12 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+})
+var mesh12 = new THREE.Mesh(geometry12,material12);
+//scene.add(mesh12);
+mesh12.position.set(-7.5,4.5,0);
+
+//primera tira de huesos AGRUPADA
+var uno = new THREE.Group();
+uno.add(mesh9,mesh12);
+uno.position.set(-1,0,0);
+scene.add(uno);
+
+//segundo hueso 
+//tira
+var geometry10 = new THREE.TorusGeometry(3,1.2,20,200,30);
+var material10 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+   
+})
+var mesh10 = new THREE.Mesh(geometry10,material10);
+//scene.add(mesh10);
+mesh10.position.set(5,7,0);
+
+//tercera cabeza
+var geometry8 = new THREE.SphereGeometry(2.6,90,80);
+var material8 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+})
+var mesh8 = new THREE.Mesh(geometry8,material8);
+//scene.add(mesh8);
+mesh8.position.set(9.5,5.4,0);
+
+//segunda tira de hueso AGRUPADA
+var dos = new THREE.Group();
+dos.add(mesh10,mesh8);
+dos.position.set(-1,0,0);
+scene.add(dos);
+
+//tercera tira de hueso 
+//tercera cabeza
+var geometry13 = new THREE.SphereGeometry(2.6,90,80);
+var material13 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+})
+var mesh13 = new THREE.Mesh(geometry13,material13);
+//scene.add(mesh13);
+mesh13.position.set(0,6,8);
+
+//tercera tira
+var geometry14 = new THREE.TorusGeometry(3,1.2,20,200,30);
+var material14 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+   
+})
+var mesh14 = new THREE.Mesh(geometry14,material14);
+//scene.add(mesh14);
+mesh14.rotation.y = -Math.PI / 2;
+mesh14.position.set(0,7,5);
+
+//tercera tira de hueso AGRUPADA
+var tres = new THREE.Group();
+tres.add(mesh13,mesh14);
+tres.position.set(0,0,0);
+scene.add(tres);
+
+//cuerta cabeza 
+var geometry15 = new THREE.SphereGeometry(2.6,90,80);
+var material15 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+})
+var mesh15 = new THREE.Mesh(geometry15,material15);
+//scene.add(mesh15);
+mesh15.position.set(0,6,-8);
+
+//cuarta tira
+var geometry16 = new THREE.TorusGeometry(3,1.2,20,200,30);
+var material16 = new THREE.MeshBasicMaterial({
+    color: 0xAB7424,
+    side: THREE.DoubleSide,
+   
+})
+var mesh16 = new THREE.Mesh(geometry16,material16);
+//scene.add(mesh16);
+mesh16.rotation.y = -Math.PI / 2;
+mesh16.position.set(0,7,-5);
+
+//tercera tira de hueso AGRUPADA
+var UNO = new THREE.Group();
+UNO.add(mesh15,mesh16);
+UNO.position.set(0,0,0);
+scene.add(UNO);
+
+//PAN DE MUERTO AGRUPADO 
+var DOS = new THREE.Group();
+DOS.add(uno,dos,tres,UNO,mesh9,mesh7,mesh11);
+DOS.position.set(0,0,0);
+scene.add(DOS);
+
+
+
+
+
+
+
+
+
+//🎰🎰Rendering y animación
+    requestAnimationFrame(render);
+    function render() {
+    //🪄🪄 Animación - 
+
+
+
+
+
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+    controls.update();
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>tamal</title>
+</head>
+<body>
+    
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través de 
+        secuencias de comandos (por lo general JavaScript ).-->
+</canvas>
+
+<!-- Aquí va todo el código de three.js -->
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+<script type="importmap"> 
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js" 
+        }
+}
+</script>
+<script type="module"> 
+//🗃️🗃️ Mandar llamar a la librería
+    import * as THREE from 'three'; 
+    import {OrbitControls} from 'three/OrbitControls';
+    console.log(OrbitControls);
+    import {RoundedBoxGeometry} from "./js/RoundedBoxGeometry.js"
+
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x70707C);
+
+
+// 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,2000
+      );
+    scene.add(camera);
+
+    //Settings de la cámara
+    camera.position.set(0, 4, 25);
+
+    // Añadiendo los OrbitControls
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+//🎶 Grids
+ 
+
+
+// Ejes
+
+
+
+
+//colocar los objetos
+
+//// Tamal (Hoja de Maíz)
+
+var geometryTamal = new THREE.CylinderGeometry(2, 1.2, 7, 32);
+var materialTamal = new THREE.MeshBasicMaterial({
+    color: 0x90A955 // Color verde/seco de hoja de maiz
+});
+
+var meshTamal = new THREE.Mesh(geometryTamal, materialTamal);
+meshTamal.scale.set(1.4, 1, 0.7); // Aplastado para dar forma rectangular/ovalada
+meshTamal.rotation.z = Math.PI / 6; // Ligeramente inclinado
+meshTamal.position.set(0, 3, 2);
+
+scene.add(meshTamal);
+
+
+// Amarra del Tamal (Tira de hoja)
+
+var geometryTira = new THREE.CylinderGeometry(2.1, 2.1, 0.6, 32);
+var materialTira = new THREE.MeshBasicMaterial({
+    color: 0x4F6D7A // Tono más oscuro de contraste para el amarre
+});
+var meshTira = new THREE.Mesh(geometryTira, materialTira);
+meshTira.scale.set(1.42, 1, 0.72);
+meshTira.rotation.z = Math.PI / 6;
+meshTira.position.set(0, 3, 2);
+scene.add(meshTira);
+
+
+///  💫💢🐭🐭 LUCES
+ 
+
+
+
+//🎰🎰Rendering y animación
+    requestAnimationFrame(render);
+    function render() {
+    //🪄🪄 Animación - 
+
+
+
+
+
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+    controls.update();
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ofrenda</title>
+</head>
+<body>
+
+
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través d
+        secuencias de comandos (por lo general JavaScript ).-->
+
+</canvas>
+<!-- Aquí va todo el código de three.js -->
+
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+
+<script type="importmap">
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js"
+
+        }
+
+       
+
+}
+
+
+</script>
+<script type="module">
+//🗃️🗃️ Mandar llamar a la librería
+    import * as THREE from 'three';
+    import {OrbitControls} from 'three/OrbitControls';
+    console.log(OrbitControls);
+    import {RoundedBoxGeometry} from "./js/RoundedBoxGeometry.js"
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x70707C);
+    // Habilitar sombras en el renderer con mejor calidad
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,2000
+    );
+    scene.add(camera);
+ 
+    //Settings de la cámara
+    camera.position.set(0, 15, 60);
+
+    // Añadiendo los OrbitControls
+
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+///  LUCES (Intensidades reducidas)
+var ligth1= new THREE.AmbientLight(0xFFA500, 0.3);
+scene.add(ligth1);
+
+
+
+
+
+//// SOMBRA / LUZ DIRECCIONAL
+var light = new THREE.DirectionalLight(0xffffff, 0.2);
+light.position.set(1, 15, 1);
+light.target.position.set(0,0,0);
+light.castShadow = true;
+light.shadow.bias = -0.001;
+light.shadow.mapSize.width = 1024;
+light.shadow.mapSize.height = 1024;
+light.shadow.camera.top = 25;
+light.shadow.camera.right = 25;
+light.shadow.camera.left = -25;
+light.shadow.camera.bottom = -25;
+light.shadow.camera.visible = false;
+scene.add(light);
+
+// Espacio para colocar los objetos
+var loader = new THREE.TextureLoader();
+var bgtexture = loader.load("./Assets/fondo.jpg");
+scene.background = bgtexture;
+
+//OBJETOS
+
+// piso
+var pisoTexture = loader.load("./Assets/piso.jpg");
+var piso = new THREE.Mesh(new THREE.BoxGeometry(50, 0.1, 50),
+new THREE.MeshStandardMaterial({ map: pisoTexture, side: THREE.DoubleSide, roughness: 0.8 }));
+
+scene.add(piso);
+piso.receiveShadow = true;
+
+
+// piso 1 - base principal de la ofrenda
+var texture = new THREE.TextureLoader().load("./Assets/textur.jpg");
+var material = new THREE.MeshStandardMaterial({map: texture, side: THREE.DoubleSide, roughness: 0.5});
+var cubo1 = new THREE.Mesh(new THREE.BoxGeometry(24, 6, 14), material);
+cubo1.position.set(0, 3, 1);
+scene.add(cubo1);
+cubo1.castShadow = true;
+cubo1.receiveShadow = true;
+
+
+
+
+
+// piso 2 - base superior
+var texture = new THREE.TextureLoader().load("./Assets/textur.jpg");
+var material = new THREE.MeshStandardMaterial({map: texture, side: THREE.DoubleSide, roughness: 0.5});
+var cubo2 = new THREE.Mesh(new THREE.BoxGeometry(18, 4, 9), material);
+cubo2.position.set(0, 8, 1);
+scene.add(cubo2);
+cubo2.castShadow = true;
+cubo2.receiveShadow = true;
+
+
+
+//recuadros
+
+var texture = new THREE.TextureLoader().load("./Assets/recuadro.jpg");
+var material = new THREE.MeshStandardMaterial({map: texture, side: THREE.DoubleSide, roughness: 0.5});
+var cubo3 = new THREE.Mesh(new THREE.BoxGeometry(2, 3, 0.3), material);
+cubo3.position.set(-5, 7.5, 7);
+cubo3.scale.set(1,1,1);
+cubo3.rotation.set(-0.2,0,0);
+scene.add(cubo3);
+cubo3.castShadow = true;
+cubo3.receiveShadow = true;
+
+//1
+var texture = new THREE.TextureLoader().load("./Assets/recuadro.jpg");
+var material = new THREE.MeshStandardMaterial({map: texture, side: THREE.DoubleSide, roughness: 0.5});
+var cubo4 = new THREE.Mesh(new THREE.BoxGeometry(2, 3, 0.3), material);
+cubo4.position.set(5, 7.5, 7);
+cubo4.scale.set(1,1,1);
+cubo4.rotation.set(-0.2,0,0);
+scene.add(cubo4);
+cubo4.castShadow = true;
+cubo4.receiveShadow = true;
+
+
+
+//2
+
+var texture = new THREE.TextureLoader().load("./Assets/recuadro.jpg");
+var material = new THREE.MeshStandardMaterial({map: texture, side: THREE.DoubleSide, roughness: 0.5});
+var cubo5 = new THREE.Mesh(new THREE.BoxGeometry(2, 3, 0.3), material);
+cubo5.position.set(-0.1, 11.5, 3);
+cubo5.scale.set(1,1,1);
+cubo5.rotation.set(-0.2,0,0);
+scene.add(cubo5);
+cubo5.castShadow = true;
+cubo5.receiveShadow = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// SpotLight con intensidad más tenue
+var SL1 = new THREE.SpotLight(0xffffff,1,25,0.5,0.5,0);
+scene.add(SL1);
+var helperSL1 = new THREE.SpotLightHelper(SL1);
+//scene.add(helperSL1);
+SL1.target.position.set(0,0,0);
+scene.add(SL1.target);
+SL1.position.set(0,26,0);
+
+
+
+// SpotLight
+//var SL2 = new THREE.SpotLight(0xffffff,2,25,0.5,0.5,0);
+//scene.add(SL2);
+//var helperSL2 = new THREE.SpotLightHelper(SL2);
+//scene.add(helperSL2);
+//SL2.target.position.set(2,0,0);
+//scene.add(SL2.target);
+//SL2.position.set(40,26,0);
+
+
+
+//// SpotLight2
+
+//var SL3 = new THREE.SpotLight(0xffffff,1,25,0.5,0.5,0);
+//scene.add(SL3);
+//var helperSL3 = new THREE.SpotLightHelper(SL3);
+//scene.add(helperSL3);
+//SL3.target.position.set(-40,0,0);
+//scene.add(SL3.target);
+//SL3.position.set(-40,25,0);
+
+
+//props nivel 1
+
+
+import mandarina from "./props/mandarina.js";
+const Mandarina = mandarina ({x:1, y:1, z:2});
+Mandarina.scale.set(0.3,0.3,0.3);
+Mandarina.position.set(-8, 6, -1);
+scene.add(Mandarina);
+const Mandarina2 = mandarina ({x:1, y:1, z:2});
+Mandarina2.scale.set(0.3,0.3,0.3);
+Mandarina2.position.set(8, 6, -1);
+scene.add(Mandarina2);
+
+import tequila from "./props/tequila.js";
+const tequil = tequila({x:1, y:1, z:1});
+tequil.scale.set(0.2,0.2,0.2);
+tequil.position.set(7, 6, 4);
+scene.add(tequil);
+
+import Veladora from "./props/Veladora.js";
+const vela = Veladora({x:1,y:1,z:1});
+
+
+
+
+
+
+
+
+
+
+
+// BASE SUPERIOR: FLORES, PAN, TAMAL
+
+
+
+import flor from "./props/flor.js";
+const flores = flor ({x:1, y:10, z:3});
+flores.scale.set(0.1,0.1,0.1);
+flores.position.set(-0.1, 8.5, 5.5);
+flores.rotation.set(1.5,0,0);
+scene.add(flores);
+
+const flores1 = flor ({x:1, y:10, z:3});
+flores1.scale.set(0.1,0.1,0.1);
+flores1.position.set(0.6, 9, 5.5);
+flores1.rotation.set(1.5,0,0);
+scene.add(flores1);
+
+
+
+const flores2 = flor ({x:1, y:10, z:3});
+flores2.scale.set(0.1,0.1,0.1);
+flores2.position.set(-0.7, 9, 5.5);
+flores2.rotation.set(1.5,0,0);
+scene.add(flores2);
+
+
+
+const flores3 = flor ({x:1, y:10, z:3});
+flores3.scale.set(0.1,0.1,0.1);
+flores3.position.set(-1.5, 9.5, 5.5);
+flores3.rotation.set(1.5,0,0);
+scene.add(flores3);
+
+
+
+const flores4 = flor ({x:1, y:10, z:3});
+flores4.scale.set(0.1,0.1,0.1);
+flores4.position.set(1.5, 9.5, 5.5);
+flores4.rotation.set(1.5,0,0);
+scene.add(flores4);
+
+
+
+const flores5 = flor ({x:1, y:10, z:3});
+flores5.scale.set(0.1,0.1,0.1);
+flores5.position.set(2.5, 9.5, 5.5);
+flores5.rotation.set(1.5,0,0);
+scene.add(flores5);
+
+
+
+const flores6 = flor ({x:1, y:10, z:3});
+flores6.scale.set(0.1,0.1,0.1);
+flores6.position.set(-2.5, 9.5, 5.5);
+flores6.rotation.set(1.5,0,0);
+scene.add(flores6);
+
+
+
+const flores7 = flor ({x:1, y:10, z:3});
+flores7.scale.set(0.1,0.1,0.1);
+flores7.position.set(3.5, 9, 5.5);
+flores7.rotation.set(1.5,0,0);
+scene.add(flores7);
+
+
+
+const flores8 = flor ({x:1, y:10, z:3});
+flores8.scale.set(0.1,0.1,0.1);
+flores8.position.set(-3.5, 9, 5.5);
+flores8.rotation.set(1.5,0,0);
+scene.add(flores8);
+
+
+
+const flores9 = flor ({x:1, y:10, z:3});
+flores9.scale.set(0.1,0.1,0.1);
+flores9.position.set(4.5, 8.5, 5.5);
+flores9.rotation.set(1.5,0,0);
+scene.add(flores9);
+
+
+
+
+const flores10 = flor ({x:1, y:10, z:3});
+flores10.scale.set(0.1,0.1,0.1);
+flores10.position.set(-4.5, 8.5, 5.5);
+flores10.rotation.set(1.5,0,0);
+scene.add(flores10);
+
+
+const flores11 = flor ({x:1, y:10, z:3});
+flores11.scale.set(0.1,0.1,0.1);
+flores11.position.set(5.5, 8.5, 5.5);
+flores11.rotation.set(1.5,0,0);
+scene.add(flores11);
+
+
+const flores12 = flor ({x:1, y:10, z:3});
+flores12.scale.set(0.1,0.1,0.1);
+flores12.position.set(-5.5, 8.5, 5.5);
+flores12.rotation.set(1.5,0,0);
+scene.add(flores12);
+
+
+const flores13 = flor ({x:1, y:10, z:3});
+flores13.scale.set(0.1,0.1,0.1);
+flores13.position.set(6.5, 8.8, 5.5);
+flores13.rotation.set(1.5,0,0);
+scene.add(flores13);
+
+
+const flores14 = flor ({x:1, y:10, z:3});
+flores14.scale.set(0.1,0.1,0.1);
+flores14.position.set(-6.5, 8.5, 5.5);
+flores14.rotation.set(1.5,0,0);
+scene.add(flores14);
+
+
+const flores15 = flor ({x:1, y:10, z:3});
+flores15.scale.set(0.1,0.1,0.1);
+flores15.position.set(7.5, 9.3, 5.5);
+flores15.rotation.set(1.5,0,0);
+scene.add(flores15);
+
+
+const flores16 = flor ({x:1, y:10, z:3});
+flores16.scale.set(0.1,0.1,0.1);
+flores16.position.set(-7.5, 9, 5.5);
+flores16.rotation.set(1.5,0,0);
+scene.add(flores16);
+
+
+const flores17 = flor ({x:1, y:10, z:3});
+flores17.scale.set(0.1,0.1,0.1);
+flores17.position.set(8.5, 9.8, 5.5);
+flores17.rotation.set(1.6,0,0);
+scene.add(flores17);
+
+
+const flores18 = flor ({x:1, y:10, z:3});
+flores18.scale.set(0.1,0.1,0.1);
+flores18.position.set(-8.5, 9.8, 5.5);
+flores18.rotation.set(1.6,0,0);
+scene.add(flores18);
+
+
+
+
+
+//flores nivel 1
+
+
+
+const flores0 = flor ({x:1, y:10, z:3});
+flores0.scale.set(0.1,0.1,0.1);
+flores0.position.set(0.0, 5.0, 8);
+flores0.rotation.set(1.5,0,0);
+scene.add(flores0);
+
+
+const floresUno = flor ({x:1, y:10, z:3});
+floresUno.scale.set(0.1,0.1,0.1);
+floresUno.position.set(1.0, 4.97, 8);
+floresUno.rotation.set(1.5,0,0);
+scene.add(floresUno);
+
+
+
+const floresDos = flor ({x:1, y:10, z:3});
+floresDos.scale.set(0.1,0.1,0.1); 
+floresDos.position.set(-1.0, 4.97, 8);
+floresDos.rotation.set(1.5,0,0);
+scene.add(floresDos);
+
+
+
+const floresTres = flor ({x:1, y:10, z:3});
+floresTres.scale.set(0.1,0.1,0.1);
+floresTres.position.set(2.0, 4.89, 8);
+floresTres.rotation.set(1.5,0,0);
+scene.add(floresTres);
+
+
+
+const floresCuatro = flor ({x:1, y:10, z:3});
+floresCuatro.scale.set(0.1,0.1,0.1);
+floresCuatro.position.set(-2.0, 4.89, 8);
+floresCuatro.rotation.set(1.5,0,0);
+scene.add(floresCuatro);
+
+
+
+const floresCinco = flor ({x:1, y:10, z:3});
+floresCinco.scale.set(0.1,0.1,0.1);
+floresCinco.position.set(3.0, 4.75, 8);
+floresCinco.rotation.set(1.5,0,0);
+scene.add(floresCinco);
+
+
+
+const floresSeis = flor ({x:1, y:10, z:3});
+floresSeis.scale.set(0.1,0.1,0.1);
+floresSeis.position.set(-3.0, 4.75, 8);
+floresSeis.rotation.set(1.5,0,0);
+scene.add(floresSeis);
+
+
+
+const floresSiete = flor ({x:1, y:10, z:3});
+floresSiete.scale.set(0.1,0.1,0.1);
+floresSiete.position.set(4.0, 4.56, 8);
+floresSiete.rotation.set(1.5,0,0);
+scene.add(floresSiete);
+
+
+
+const floresOcho = flor ({x:1, y:10, z:3});
+floresOcho.scale.set(0.1,0.1,0.1);
+floresOcho.position.set(-4.0, 4.56, 8);
+floresOcho.rotation.set(1.5,0,0);
+scene.add(floresOcho);
+
+
+
+const floresNueve = flor ({x:1, y:10, z:3});
+floresNueve.scale.set(0.1,0.1,0.1);
+floresNueve.position.set(5.0, 4.31, 8);
+floresNueve.rotation.set(1.5,0,0);
+scene.add(floresNueve);
+
+
+
+const floresDiez = flor ({x:1, y:10, z:3});
+floresDiez.scale.set(0.1,0.1,0.1);
+floresDiez.position.set(-5.0, 4.31, 8);
+floresDiez.rotation.set(1.5,0,0);
+scene.add(floresDiez);
+
+
+
+const floresOnce = flor ({x:1, y:10, z:3});
+floresOnce.scale.set(0.1,0.1,0.1);
+floresOnce.position.set(6.0, 4.0, 8);
+floresOnce.rotation.set(1.5,0,0);
+scene.add(floresOnce);
+
+
+const floresDoce = flor ({x:1, y:10, z:3});
+floresDoce.scale.set(0.1,0.1,0.1);
+floresDoce.position.set(-6.0, 4.0, 8);
+floresDoce.rotation.set(1.5,0,0);
+scene.add(floresDoce);
+
+
+
+const floresTrece = flor ({x:1, y:10, z:3});
+floresTrece.scale.set(0.1,0.1,0.1);
+floresTrece.position.set(7.0, 3.64, 8);
+floresTrece.rotation.set(1.5,0,0);
+scene.add(floresTrece);
+
+
+const floresCatorce = flor ({x:1, y:10, z:3});
+floresCatorce.scale.set(0.1,0.1,0.1);
+floresCatorce.position.set(-7.0, 3.64, 8);
+floresCatorce.rotation.set(1.5,0,0);
+scene.add(floresCatorce);
+
+
+const floresQuince = flor ({x:1, y:10, z:3});
+floresQuince.scale.set(0.1,0.1,0.1);
+floresQuince.position.set(8.0, 3.22, 8);
+floresQuince.rotation.set(1.5,0,0);
+scene.add(floresQuince);
+
+
+const floresDieciseis = flor ({x:1, y:10, z:3});
+floresDieciseis.scale.set(0.1,0.1,0.1);
+floresDieciseis.position.set(-8.0, 3.22, 8);
+floresDieciseis.rotation.set(1.5,0,0);
+scene.add(floresDieciseis);
+
+
+const floresDiecisiete = flor ({x:1, y:10, z:3});
+floresDiecisiete.scale.set(0.1,0.1,0.1);
+floresDiecisiete.position.set(9.0, 2.75, 8);
+floresDiecisiete.rotation.set(1.6,0,0);
+scene.add(floresDiecisiete);
+
+
+const floresDieciocho = flor ({x:1, y:10, z:3});
+floresDieciocho.scale.set(0.1,0.1,0.1);
+floresDieciocho.position.set(-9.0, 2.75, 8);
+floresDieciocho.rotation.set(1.6,0,0);
+scene.add(floresDieciocho);
+
+
+const floresDiecinueve = flor ({x:1, y:10, z:3});
+floresDiecinueve.scale.set(0.1,0.1,0.1);
+floresDiecinueve.position.set(10.0, 2.22, 8);
+floresDiecinueve.rotation.set(1.6,0,0);
+scene.add(floresDiecinueve);
+
+
+const floresVeinte = flor ({x:1, y:10, z:3});
+floresVeinte.scale.set(0.1,0.1,0.1);
+floresVeinte.position.set(-10.0, 2.22, 8);
+floresVeinte.rotation.set(1.6,0,0);
+scene.add(floresVeinte);
+
+
+const floresVeintiuno = flor ({x:1, y:10, z:3});
+floresVeintiuno.scale.set(0.1,0.1,0.1);
+floresVeintiuno.position.set(11.0, 1.64, 8);
+floresVeintiuno.rotation.set(1.6,0,0);
+scene.add(floresVeintiuno);
+
+
+const floresVeintidos = flor ({x:1, y:10, z:3});
+floresVeintidos.scale.set(0.1,0.1,0.1);
+floresVeintidos.position.set(-11.0, 1.64, 8);
+floresVeintidos.rotation.set(1.6,0,0);
+scene.add(floresVeintidos);
+
+
+const floresVeintitres = flor ({x:1, y:10, z:3});
+floresVeintitres.scale.set(0.1,0.1,0.1);
+floresVeintitres.position.set(12.0, 1.0, 8);
+floresVeintitres.rotation.set(1.6,0,0);
+scene.add(floresVeintitres);
+
+
+const floresVeinticuatro = flor ({x:1, y:10, z:3});
+floresVeinticuatro.scale.set(0.1,0.1,0.1);
+floresVeinticuatro.position.set(-12.0, 1.0, 8);
+floresVeinticuatro.rotation.set(1.6,0,0);
+scene.add(floresVeinticuatro);
+
+
+
+//flores de lado
+
+
+const floresA = flor ({x:1, y:10, z:3});
+floresA.scale.set(0.1,0.1,0.1);
+floresA.position.set(-3.6, 1.4, 8);
+floresA.rotation.set(1.5,0,0);
+scene.add(floresA);
+
+
+const floresB = flor ({x:1, y:10, z:3});
+floresB.scale.set(0.1,0.1,0.1);
+floresB.position.set(-2.7, 2.5, 8);
+floresB.rotation.set(1.5,0,0);
+scene.add(floresB);
+
+
+const floresC = flor ({x:1, y:10, z:3});
+floresC.scale.set(0.1,0.1,0.1);
+floresC.position.set(-1.8, 3.3, 8);
+floresC.rotation.set(1.5,0,0);
+scene.add(floresC);
+
+
+const floresD = flor ({x:1, y:10, z:3});
+floresD.scale.set(0.1,0.1,0.1);
+floresD.position.set(-0.9, 3.8, 8);
+floresD.rotation.set(1.5,0,0);
+scene.add(floresD);
+
+
+const floresE = flor ({x:1, y:10, z:3});
+floresE.scale.set(0.1,0.1,0.1);
+floresE.position.set(0.0, 4.0, 8);
+floresE.rotation.set(1.5,0,0);
+scene.add(floresE);
+
+
+const floresF = flor ({x:1, y:10, z:3});
+floresF.scale.set(0.1,0.1,0.1);
+floresF.position.set(0.9, 3.8, 8);
+floresF.rotation.set(1.5,0,0);
+scene.add(floresF);
+
+
+const floresG = flor ({x:1, y:10, z:3});
+floresG.scale.set(0.1,0.1,0.1);
+floresG.position.set(1.8, 3.3, 8);
+floresG.rotation.set(1.5,0,0);
+scene.add(floresG);
+
+
+const floresH = flor ({x:1, y:10, z:3});
+floresH.scale.set(0.1,0.1,0.1);
+floresH.position.set(2.7, 2.5, 8);
+floresH.rotation.set(1.5,0,0);
+scene.add(floresH);
+
+
+const floresI = flor ({x:1, y:10, z:3});
+floresI.scale.set(0.1,0.1,0.1);
+floresI.position.set(3.6, 1.4, 8);
+floresI.rotation.set(1.5,0,0);
+scene.add(floresI);
+
+
+import tamal from "./props/tamal.js";
+const tam = tamal({x:-2, y:10, z:1});
+tam.scale.set(0.2,0.2,0.2);
+tam.position.set(-5, 11, 2);
+tam.rotation.set(2,1,3);
+scene.add(tam);
+
+
+import Pan from "./props/Pan.js";
+const PanM = Pan({x:1, y:1, z:1});
+PanM.scale.set(0.4,0.4,0.4);
+PanM.position.set(-1, 10, 4);
+scene.add(PanM);
+
+
+const PanM2 = Pan({x:1, y:1, z:1});
+PanM2.scale.set(0.4,0.4,0.4);
+PanM2.position.set(-7, 10, 4);
+scene.add(PanM2);
+
+
+
+import tequilero from "./props/tequilero.js";
+const tequile = tequilero ({x:1, y:1, z:1});
+tequile.scale.set(0.2,0.2,0.2);
+tequile.position.set(4, 10, 2);
+scene.add(tequile);
+
+
+const tequile2 = tequilero ({x:1, y:1, z:1});
+tequile2.scale.set(0.2,0.2,0.2);
+tequile2.position.set(-12, 10, 2);
+scene.add(tequile2);
+
+
+const Mandarina3 = mandarina ({x:1, y:1, z:2});
+Mandarina3.scale.set(0.3,0.3,0.3);
+Mandarina3.position.set(6, 10, -4);
+scene.add(Mandarina3);
+
+
+const Mandarina4 = mandarina ({x:1, y:1, z:2});
+Mandarina4.scale.set(0.3,0.3,0.3);
+Mandarina4.position.set(-6, 10, -4);
+scene.add(Mandarina4);
+
+
+import pan from "./props/PandeMuerto.js";
+const PAN = pan({x: 2, y: 6, z: 7});
+PAN.scale.set(0.1,0.1,0.1);
+scene.add(PAN );
+
+
+const PAN01 = pan ({x: 1, y: 6, z: 7});
+PAN01.scale.set(0.1,0.1,0.1);
+PAN01.position.set(-2.5,6,7);
+scene.add(PAN01);
+
+
+import caballito from "./props/caballito.js";
+const CABALLITO = caballito({x: 10, y: 1, z: 7});
+CABALLITO.scale.set(0.1,0.1,0.1);
+CABALLITO.position.set(0,6,7)
+scene.add(CABALLITO );
+
+const CABALLITO1 = caballito({x: 10, y: 1, z: 7});
+CABALLITO1.scale.set(0.1,0.1,0.1);
+CABALLITO1.position.set(9.5,6,7)
+scene.add(CABALLITO1 );
+
+import veladora from "./props/veladora.js";
+const VELADORA = veladora({x: 10, y: 1, z: 7});
+VELADORA.scale.set(0.1,0.1,0.1);
+VELADORA.position.set(11,6,7)
+scene.add(VELADORA );
+
+
+const VELADORA1 = veladora({x: 10, y: 1, z: 7});
+VELADORA1.scale.set(0.1,0.1,0.1);
+VELADORA1.position.set(-10,6,7)
+scene.add(VELADORA1 );
+
+const VELADORA2 = veladora({x: 10, y: 1, z: 7});
+VELADORA2.scale.set(0.1,0.1,0.1);
+VELADORA2.position.set(-5,10,5)
+scene.add(VELADORA2 );
+
+
+const VELADORA3 = veladora({x: 10, y: 1, z: 7});
+VELADORA3.scale.set(0.1,0.1,0.1);
+VELADORA3.position.set(5,10,5)
+scene.add(VELADORA3 );
+
+
+//ileras de veladoras y flores 
+const VELADORA4 = veladora({x: 10, y: 1, z: 7});
+VELADORA4.scale.set(0.1,0.1,0.1);
+VELADORA4.position.set(16,0,5)
+scene.add(VELADORA4 );
+
+const VELADORA5 = veladora({x: 10, y: 1, z: 7});
+VELADORA5.scale.set(0.1,0.1,0.1);
+VELADORA5.position.set(-16,0,5)
+scene.add(VELADORA5 );
+
+const VELADORA6 = veladora({x: 10, y: 1, z: 7});
+VELADORA6.scale.set(0.1,0.1,0.1);
+VELADORA6.position.set(16,0,10)
+scene.add(VELADORA6 );
+
+const VELADORA7 = veladora({x: 10, y: 1, z: 7});
+VELADORA7.scale.set(0.1,0.1,0.1);
+VELADORA7.position.set(16,0,15)
+scene.add(VELADORA7 );
+
+const VELADORA8 = veladora({x: 10, y: 1, z: 7});
+VELADORA8.scale.set(0.1,0.1,0.1);
+VELADORA8.position.set(16,0,20)
+scene.add(VELADORA8 );
+
+const VELADORA9 = veladora({x: 10, y: 1, z: 7});
+VELADORA9.scale.set(0.1,0.1,0.1);
+VELADORA9.position.set(16,0,25)
+scene.add(VELADORA9 );
+
+const VELADORA10 = veladora({x: 10, y: 1, z: 7});
+VELADORA10.scale.set(0.1,0.1,0.1);
+VELADORA10.position.set(-16,0,10)
+scene.add(VELADORA10 );
+
+const VELADORA11 = veladora({x: 10, y: 1, z: 7});
+VELADORA11.scale.set(0.1,0.1,0.1);
+VELADORA11.position.set(-16,0,15)
+scene.add(VELADORA11 );
+
+const VELADORA12 = veladora({x: 10, y: 1, z: 7});
+VELADORA12.scale.set(0.1,0.1,0.1);
+VELADORA12.position.set(-16,0,20)
+scene.add(VELADORA12 );
+
+const VELADORA13 = veladora({x: 10, y: 1, z: 7});
+VELADORA13.scale.set(0.1,0.1,0.1);
+VELADORA13.position.set(-16,0,25)
+scene.add(VELADORA13 );
+
+const floresDa = flor ({x:1, y:10, z:3});
+floresDa.scale.set(0.1,0.1,0.1);
+floresDa.position.set(-16, 0,22.5);
+scene.add(floresDa);
+
+const floresJo = flor ({x:1, y:10, z:3});
+floresJo.scale.set(0.1,0.1,0.1);
+floresJo.position.set(-16, 0,7.5);
+scene.add(floresJo);
+
+const floresBr = flor ({x:1, y:10, z:3});
+floresBr.scale.set(0.1,0.1,0.1);
+floresBr.position.set(16, 0,22.5);
+scene.add(floresBr);
+
+const floresUz = flor ({x:1, y:10, z:3});
+floresUz.scale.set(0.1,0.1,0.1);
+floresUz.position.set(16, 0,7.5);
+scene.add(floresUz);
+
+const floresNi = flor ({x:1, y:10, z:3});
+floresNi.scale.set(0.1,0.1,0.1);
+floresNi.position.set(-16, 0,12.5);
+scene.add(floresNi);
+
+const floresNa = flor ({x:1, y:10, z:3});
+floresNa.scale.set(0.1,0.1,0.1);
+floresNa.position.set(16, 0,12.5);
+scene.add(floresNa);
+
+const floresLi = flor ({x:1, y:10, z:3});
+floresLi.scale.set(0.1,0.1,0.1);
+floresLi.position.set(16, 0,17.5);
+scene.add(floresLi);
+
+const floresEl = flor ({x:1, y:10, z:3});
+floresEl.scale.set(0.1,0.1,0.1);
+floresEl.position.set(-16, 0,17.5);
+scene.add(floresEl);
+
+//🎰🎰Rendering y animación
+
+   
+
+
+    requestAnimationFrame(render);
+
+    function render() {
+
+    //🪄🪄 Animación -
+
+ 
+
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+
+    controls.update();
+
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(render);
+
+    }
+
+</script>
+
+</body>
+
+</html> 
